@@ -9,25 +9,37 @@ import { SongsController } from './songs/songs.controller';
 import { DevConfigService } from './common/providers/DevConfigService';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import { Song } from './songs/song.entity';
 
-imports: [
-  TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'duyla',
-    password: '1',
-    database: 'n-test',
-    entities: [],
-    synchronize: true,
-  }),
-];
+// imports: [
+//   TypeOrmModule.forRoot({
+//     type: 'postgres',
+//     host: 'localhost',
+//     port: 5432,
+//     username: 'duyla',
+//     password: '1',
+//     database: 'n-test',
+//     entities: [Song],
+//     synchronize: true,
+//   }),
+// ];
 
 const devConfig = { port: 3000 };
 const proConfig = { port: 4000 };
 
 @Module({
-  imports: [SongsModule],
+  imports: [
+    SongsModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'duyla',
+      password: 'n-test',
+      entities: [Song],
+      synchronize: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [
     AppService,
